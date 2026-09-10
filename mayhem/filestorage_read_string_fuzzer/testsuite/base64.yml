@@ -1,0 +1,7 @@
+%YAML:1.0
+---
+m: !!opencv-matrix
+   rows: 2
+   cols: 3
+   dt: "3u"
+   data: "AAECAwQFBgcICQoLDA0ODxAR"

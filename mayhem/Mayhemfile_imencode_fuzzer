@@ -1,0 +1,15 @@
+project: savantenvs/opencv
+target: imencode_fuzzer
+
+# cv::imencode: the LAST byte picks the output codec (index = byte % 14), the rest is encoded as a raw 1xN row AND, if it decodes as an image, re-encoded as that image (multi-row/channel/16-bit/float encoder paths).
+# In-process libFuzzer harness (mayhem/harnesses/imencode_fuzzer.cc); the library (core, imgproc, imgcodecs +
+# vendored codecs) is built with ASan+UBSan (halting) and SanCov by mayhem/build.sh.
+# Seeds: the server-accumulated corpus plus the per-target starter seeds committed under
+# mayhem/imencode_fuzzer/testsuite (resolved on the CI runner checkout).
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/imencode_fuzzer/testsuite
+
+cmds:
+  - cmd: /mayhem/imencode_fuzzer
+    libfuzzer: true

@@ -1,0 +1,15 @@
+project: savantenvs/opencv
+target: imdecode_fuzzer
+
+# cv::imdecode(IMREAD_UNCHANGED) over every compiled-in codec (PNG, JPEG, TIFF, WebP, JPEG 2000, BMP, PNM/PAM, PFM, HDR, Sun Raster, GIF); input = a raw image file.
+# In-process libFuzzer harness (mayhem/harnesses/imdecode_fuzzer.cc); the library (core, imgproc, imgcodecs +
+# vendored codecs) is built with ASan+UBSan (halting) and SanCov by mayhem/build.sh.
+# Seeds: the server-accumulated corpus plus the per-target starter seeds committed under
+# mayhem/imdecode_fuzzer/testsuite (resolved on the CI runner checkout).
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/imdecode_fuzzer/testsuite
+
+cmds:
+  - cmd: /mayhem/imdecode_fuzzer
+    libfuzzer: true

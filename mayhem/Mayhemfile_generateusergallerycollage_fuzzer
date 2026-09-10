@@ -1,0 +1,15 @@
+project: savantenvs/opencv
+target: generateusergallerycollage_fuzzer
+
+# cv::putText with fuzzer-controlled UTF-8 text, Hershey face, scale, thickness, line type, origin and canvas size (<=6000x6000): HarfBuzz shaping + hb-raster glyph rendering + blending.
+# In-process libFuzzer harness (mayhem/harnesses/generateusergallerycollage_fuzzer.cc); the library (core, imgproc, imgcodecs +
+# vendored codecs) is built with ASan+UBSan (halting) and SanCov by mayhem/build.sh.
+# Seeds: the server-accumulated corpus plus the per-target starter seeds committed under
+# mayhem/generateusergallerycollage_fuzzer/testsuite (resolved on the CI runner checkout).
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/generateusergallerycollage_fuzzer/testsuite
+
+cmds:
+  - cmd: /mayhem/generateusergallerycollage_fuzzer
+    libfuzzer: true

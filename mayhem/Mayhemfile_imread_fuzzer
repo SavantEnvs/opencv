@@ -1,0 +1,15 @@
+project: savantenvs/opencv
+target: imread_fuzzer
+
+# cv::imread(IMREAD_COLOR_BGR) of the input staged in a $TMPDIR mkstemp() file: file-based codec sniffing + color conversion / EXIF post-processing.
+# In-process libFuzzer harness (mayhem/harnesses/imread_fuzzer.cc); the library (core, imgproc, imgcodecs +
+# vendored codecs) is built with ASan+UBSan (halting) and SanCov by mayhem/build.sh.
+# Seeds: the server-accumulated corpus plus the per-target starter seeds committed under
+# mayhem/imread_fuzzer/testsuite (resolved on the CI runner checkout).
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/imread_fuzzer/testsuite
+
+cmds:
+  - cmd: /mayhem/imread_fuzzer
+    libfuzzer: true

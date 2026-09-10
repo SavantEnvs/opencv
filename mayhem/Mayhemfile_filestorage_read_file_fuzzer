@@ -1,0 +1,15 @@
+project: savantenvs/opencv
+target: filestorage_read_file_fuzzer
+
+# cv::FileStorage::open(<tempfile>, READ): the file-backed XML/YAML/JSON persistence parser (format sniffed from the first bytes).
+# In-process libFuzzer harness (mayhem/harnesses/filestorage_read_file_fuzzer.cc); the library (core, imgproc, imgcodecs +
+# vendored codecs) is built with ASan+UBSan (halting) and SanCov by mayhem/build.sh.
+# Seeds: the server-accumulated corpus plus the per-target starter seeds committed under
+# mayhem/filestorage_read_file_fuzzer/testsuite (resolved on the CI runner checkout).
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/filestorage_read_file_fuzzer/testsuite
+
+cmds:
+  - cmd: /mayhem/filestorage_read_file_fuzzer
+    libfuzzer: true

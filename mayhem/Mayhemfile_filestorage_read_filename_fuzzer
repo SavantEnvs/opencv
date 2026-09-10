@@ -1,0 +1,15 @@
+project: savantenvs/opencv
+target: filestorage_read_filename_fuzzer
+
+# cv::FileStorage::open(<input as file NAME>, READ): file-name parameter/extension parsing ('?base64', '.gz[0-9]' -> zlib) and the not-found path; '/' is mapped to '_' (hang guard, see harness).
+# In-process libFuzzer harness (mayhem/harnesses/filestorage_read_filename_fuzzer.cc); the library (core, imgproc, imgcodecs +
+# vendored codecs) is built with ASan+UBSan (halting) and SanCov by mayhem/build.sh.
+# Seeds: the server-accumulated corpus plus the per-target starter seeds committed under
+# mayhem/filestorage_read_filename_fuzzer/testsuite (resolved on the CI runner checkout).
+testsuite:
+  - https://$MAYHEM_DOMAIN/$MAYHEM_PROJECT/$MAYHEM_TARGET/testsuite.tar
+  - file://mayhem/filestorage_read_filename_fuzzer/testsuite
+
+cmds:
+  - cmd: /mayhem/filestorage_read_filename_fuzzer
+    libfuzzer: true
