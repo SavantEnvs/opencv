@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<opencv_storage>
+<a>42</a>
+<d>3.5</d>
+<s>"mayhem"</s>
+<m type_id="opencv-matrix">
+  <rows>2</rows>
+  <cols>2</cols>
+  <dt>i</dt>
+  <data>
+    1 2 3 4</data></m>
+<seq>
+  1 2 3</seq>
+<map>
+  <x>7</x>
+  <y>eight</y></map>
+</opencv_storage>

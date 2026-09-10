@@ -1,0 +1,8 @@
+{
+  "a": 42,
+  "d": 3.5,
+  "s": "mayhem",
+  "m": { "type_id": "opencv-matrix", "rows": 2, "cols": 2, "dt": "i", "data": [ 1, 2, 3, 4 ] },
+  "seq": [ 1, 2, 3 ],
+  "map": { "x": 7, "y": "eight" }
+}
